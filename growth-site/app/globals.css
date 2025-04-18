@@ -1,0 +1,73 @@
+/* ─────────── Tailwind v4 core + plugins ─────────── */
+@import "tailwindcss";
+@import "tailwindcss/theme";
+@plugin "@tailwindcss/typography";
+
+/* ─────────── Design tokens (mode clair) ─────────── */
+@theme {
+  /* Couleurs principales en R G B */
+  --color-bg:       255 255 255;   /* blanc pur           */
+  --color-fg:        17  24  39;   /* slate‑900           */
+  --color-muted:    241 245 249;   /* slate‑200           */
+  --color-primary:   99 102 241;   /* indigo‑600          */
+  --color-primary-fg:255 255 255;  /* texte sur primaire  */
+
+  /* Polices système : sûres et légères */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+}
+
+/* ─────────── Mode sombre automatique ─────────── */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-bg:        17  24  39;  /* slate‑900  */
+    --color-fg:       243 244 246;  /* slate‑100  */
+    --color-muted:     51  65  85;  /* slate‑700  */
+    --color-primary:  165 180 252;  /* indigo‑300 */
+    --color-primary-fg:17  24  39;  /* texte sombre */
+  }
+}
+
+/* ─────────── Base layer ─────────── */
+@layer base {
+  html { @apply scroll-smooth; }
+
+  body {
+    @apply min-h-screen font-sans leading-relaxed antialiased
+           bg-[rgb(var(--color-bg))]
+           text-[rgb(var(--color-fg))];
+  }
+
+  ::selection {
+    @apply bg-[rgb(var(--color-primary))]/70
+           text-[rgb(var(--color-primary-fg))];
+  }
+
+  a {
+    @apply text-[rgb(var(--color-primary))] underline-offset-4 hover:opacity-80;
+  }
+}
+
+/* ─────────── Components ─────────── */
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 font-medium
+           bg-[rgb(var(--color-primary))]
+           text-[rgb(var(--color-primary-fg))]
+           shadow transition hover:brightness-95 active:scale-95;
+  }
+
+  .card {
+    @apply rounded-2xl p-6 shadow-lg bg-[rgb(var(--color-muted))]/40
+           backdrop-blur dark:bg-white/5 dark:shadow-none;
+  }
+}
+
+/* ─────────── Utilities perso ─────────── */
+@layer utilities {
+  .prose-custom {
+    @apply prose prose-indigo max-w-none dark:prose-invert;
+  }
+}
